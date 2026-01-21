@@ -13,10 +13,12 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Install GNU COBOL
+      - name: Install GNU COBOL and dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y open-cobol
+          sudo apt-get install -y gnucobol build-essential gdb make git locales ca-certificates
+          sudo locale-gen en_US.UTF-8
+          sudo update-locale LANG=en_US.UTF-8 LANGUAGE=en_US:en LC_ALL=en_US.UTF-8
 
       - name: Build COBOL source with -free and -x
         run: |
