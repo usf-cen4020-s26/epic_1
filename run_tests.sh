@@ -57,7 +57,9 @@ fi
 echo -e "${YELLOW}Running tests...${NC}"
 echo ""
 
-python3 tests/test_runner.py $EXECUTABLE $VERBOSE $REPORT
+# Convert to absolute path
+EXECUTABLE_PATH="$(cd "$(dirname "$EXECUTABLE")" && pwd)/$(basename "$EXECUTABLE")"
+python3 tests/test_runner.py "$EXECUTABLE_PATH" $VERBOSE $REPORT
 
 exit_code=$?
 
