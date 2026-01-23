@@ -20,6 +20,7 @@ from typing import List, Optional, Tuple
 
 class TestStatus(Enum):
     """Enum representing the status of a test execution."""
+
     PASSED = "PASSED"
     FAILED = "FAILED"
     ERROR = "ERROR"
@@ -38,6 +39,7 @@ class TestResult:
         error_message: Error message if status is ERROR
         diff: Unified diff between expected and actual output
     """
+
     test_name: str
     status: TestStatus
     expected_output: str
@@ -57,6 +59,7 @@ class TestCase:
         expected_output_file: Path to the expected output file
         part_number: Part number for multi-part tests (None for single-part)
     """
+
     name: str
     input_file: Path
     expected_output_file: Path
@@ -86,14 +89,13 @@ class CobolTestRunner:
             raise FileNotFoundError(f"Executable not found: {executable_path}")
 
         self.executable_path = executable_path
-        self.persistence_dir = persistence_dir or Path("/tmp/incollege_test_persistence")
+        self.persistence_dir = persistence_dir or Path(
+            "/tmp/incollege_test_persistence"
+        )
         self.persistence_dir.mkdir(parents=True, exist_ok=True)
 
     def run_single_test(
-        self,
-        input_file: Path,
-        expected_output_file: Path,
-        test_name: str
+        self, input_file: Path, expected_output_file: Path, test_name: str
     ) -> TestResult:
         """
         Run a single test case.
@@ -119,7 +121,7 @@ class CobolTestRunner:
                     test_name=test_name,
                     status=TestStatus.PASSED,
                     expected_output=expected_output,
-                    actual_output=actual_output
+                    actual_output=actual_output,
                 )
             else:
                 # Generate diff
@@ -129,7 +131,7 @@ class CobolTestRunner:
                     status=TestStatus.FAILED,
                     expected_output=expected_output,
                     actual_output=actual_output,
-                    diff=diff
+                    diff=diff,
                 )
 
         except Exception as e:
@@ -138,7 +140,7 @@ class CobolTestRunner:
                 status=TestStatus.ERROR,
                 expected_output="",
                 actual_output="",
-                error_message=str(e)
+                error_message=str(e),
             )
 
     def _execute_cobol(self, input_file: Path) -> str:
@@ -154,12 +156,12 @@ class CobolTestRunner:
         Raises:
             subprocess.CalledProcessError: If program execution fails
         """
-        with open(input_file, 'r') as f:
+        with open(input_file, "r") as f:
             input_data = f.read()
 
         # Set environment for persistence
         env = os.environ.copy()
-        env['INCOLLEGE_DATA_DIR'] = str(self.persistence_dir)
+        env["INCOLLEGE_DATA_DIR"] = str(self.persistence_dir)
 
         result = subprocess.run(
             [str(self.executable_path)],
@@ -168,7 +170,7 @@ class CobolTestRunner:
             text=True,
             cwd=self.persistence_dir,
             env=env,
-            timeout=10
+            timeout=10,
         )
 
         if result.returncode != 0:
@@ -176,17 +178,12 @@ class CobolTestRunner:
                 result.returncode,
                 self.executable_path,
                 output=result.stdout,
-                stderr=result.stderr
+                stderr=result.stderr,
             )
 
         return result.stdout
 
-    def _generate_diff(
-        self,
-        expected: str,
-        actual: str,
-        test_name: str
-    ) -> str:
+    def _generate_diff(self, expected: str, actual: str, test_name: str) -> str:
         """
         Generate a unified diff between expected and actual output.
 
@@ -206,10 +203,10 @@ class CobolTestRunner:
             actual_lines,
             fromfile=f"{test_name} (expected)",
             tofile=f"{test_name} (actual)",
-            lineterm='\n'
+            lineterm="\n",
         )
 
-        return ''.join(diff)
+        return "".join(diff)
 
     def clear_persistence(self) -> None:
         """Clear persistent storage between test suites."""
@@ -261,14 +258,17 @@ def discover_tests(test_root: Path) -> List[List[TestCase]]:
             expected_file = expected_dir / f"{test_base_name}.out.txt"
 
             if not expected_file.exists():
-                print(f"Warning: Expected output file not found: {expected_file}", file=sys.stderr)
+                print(
+                    f"Warning: Expected output file not found: {expected_file}",
+                    file=sys.stderr,
+                )
                 continue
 
             test_case = TestCase(
                 name=test_base_name,
                 input_file=input_file,
                 expected_output_file=expected_file,
-                part_number=part_number
+                part_number=part_number,
             )
 
             # Group multi-part tests together
@@ -294,13 +294,13 @@ def print_test_result(result: TestResult, verbose: bool = False) -> None:
     status_symbol = {
         TestStatus.PASSED: "✓",
         TestStatus.FAILED: "✗",
-        TestStatus.ERROR: "⚠"
+        TestStatus.ERROR: "⚠",
     }
 
     status_color = {
         TestStatus.PASSED: "\033[92m",  # Green
         TestStatus.FAILED: "\033[91m",  # Red
-        TestStatus.ERROR: "\033[93m"    # Yellow
+        TestStatus.ERROR: "\033[93m",  # Yellow
     }
 
     reset_color = "\033[0m"
@@ -315,29 +315,27 @@ def print_test_result(result: TestResult, verbose: bool = False) -> None:
     elif result.status == TestStatus.FAILED:
         print(f"\n  Differences found:")
         if result.diff:
-            for line in result.diff.split('\n'):
-                if line.startswith('+') and not line.startswith('+++'):
+            for line in result.diff.split("\n"):
+                if line.startswith("+") and not line.startswith("+++"):
                     print(f"    \033[92m{line}\033[0m")  # Green for additions
-                elif line.startswith('-') and not line.startswith('---'):
+                elif line.startswith("-") and not line.startswith("---"):
                     print(f"    \033[91m{line}\033[0m")  # Red for deletions
-                elif line.startswith('@@'):
+                elif line.startswith("@@"):
                     print(f"    \033[94m{line}\033[0m")  # Blue for line numbers
                 else:
                     print(f"    {line}")
 
     if verbose and result.status != TestStatus.ERROR:
         print(f"\n  Expected Output:")
-        for line in result.expected_output.split('\n')[:10]:
+        for line in result.expected_output.split("\n")[:10]:
             print(f"    {line}")
         print(f"\n  Actual Output:")
-        for line in result.actual_output.split('\n')[:10]:
+        for line in result.actual_output.split("\n")[:10]:
             print(f"    {line}")
 
 
 def run_test_suite(
-    executable_path: Path,
-    test_root: Path,
-    verbose: bool = False
+    executable_path: Path, test_root: Path, verbose: bool = False
 ) -> Tuple[List[TestResult], int, int, int]:
     """
     Run all discovered tests.
@@ -374,9 +372,7 @@ def run_test_suite(
 
         for test_case in group:
             result = runner.run_single_test(
-                test_case.input_file,
-                test_case.expected_output_file,
-                test_case.name
+                test_case.input_file, test_case.expected_output_file, test_case.name
             )
 
             all_results.append(result)
@@ -398,7 +394,7 @@ def generate_report(
     passed: int,
     failed: int,
     errors: int,
-    output_file: Optional[Path] = None
+    output_file: Optional[Path] = None,
 ) -> None:
     """
     Generate a summary report of test results.
@@ -416,9 +412,21 @@ def generate_report(
     print(f"Test Summary")
     print(f"{'=' * 70}\n")
     print(f"Total Tests: {total}")
-    print(f"Passed: \033[92m{passed}\033[0m ({passed/total*100:.1f}%)" if total > 0 else "Passed: 0")
-    print(f"Failed: \033[91m{failed}\033[0m ({failed/total*100:.1f}%)" if total > 0 else "Failed: 0")
-    print(f"Errors: \033[93m{errors}\033[0m ({errors/total*100:.1f}%)" if total > 0 else "Errors: 0")
+    print(
+        f"Passed: \033[92m{passed}\033[0m ({passed/total*100:.1f}%)"
+        if total > 0
+        else "Passed: 0"
+    )
+    print(
+        f"Failed: \033[91m{failed}\033[0m ({failed/total*100:.1f}%)"
+        if total > 0
+        else "Failed: 0"
+    )
+    print(
+        f"Errors: \033[93m{errors}\033[0m ({errors/total*100:.1f}%)"
+        if total > 0
+        else "Errors: 0"
+    )
     print(f"\n{'=' * 70}\n")
 
     if failed > 0:
@@ -437,22 +445,22 @@ def generate_report(
 
     # Generate JSON report if requested
     if output_file:
-        report_data = {
+        report_data: dict[str, object] = {
             "summary": {
                 "total": total,
                 "passed": passed,
                 "failed": failed,
-                "errors": errors
+                "errors": errors,
             },
             "results": [
                 {
                     "test_name": r.test_name,
                     "status": r.status.value,
                     "error_message": r.error_message,
-                    "has_diff": r.diff is not None
+                    "has_diff": r.diff is not None,
                 }
                 for r in results
-            ]
+            ],
         }
 
         output_file.write_text(json.dumps(report_data, indent=2))
@@ -468,33 +476,29 @@ def main() -> int:
     """
     parser = argparse.ArgumentParser(
         description="Test runner for InCollege COBOL program",
-        formatter_class=argparse.RawDescriptionHelpFormatter
+        formatter_class=argparse.RawDescriptionHelpFormatter,
     )
 
     parser.add_argument(
-        "executable",
-        type=Path,
-        help="Path to the compiled COBOL executable"
+        "executable", type=Path, help="Path to the compiled COBOL executable"
     )
 
     parser.add_argument(
         "--test-root",
         type=Path,
         default=Path("tests/fixtures/login"),
-        help="Root directory for test fixtures (default: tests/fixtures/login)"
+        help="Root directory for test fixtures (default: tests/fixtures/login)",
     )
 
     parser.add_argument(
         "--verbose",
         "-v",
         action="store_true",
-        help="Print verbose output including actual and expected outputs"
+        help="Print verbose output including actual and expected outputs",
     )
 
     parser.add_argument(
-        "--report",
-        type=Path,
-        help="Generate JSON report at specified path"
+        "--report", type=Path, help="Generate JSON report at specified path"
     )
 
     args = parser.parse_args()
@@ -505,14 +509,14 @@ def main() -> int:
         return 1
 
     if not args.test_root.exists():
-        print(f"Error: Test root directory not found: {args.test_root}", file=sys.stderr)
+        print(
+            f"Error: Test root directory not found: {args.test_root}", file=sys.stderr
+        )
         return 1
 
     try:
         results, passed, failed, errors = run_test_suite(
-            args.executable,
-            args.test_root,
-            args.verbose
+            args.executable, args.test_root, args.verbose
         )
 
         generate_report(results, passed, failed, errors, args.report)
