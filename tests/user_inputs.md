@@ -20,8 +20,8 @@ Purpose: Entry point of the program. User chooses to log in or create a new acco
 
 ```bash
 Welcome to InCollege!
-Log In
-Create New Account
+1. Log In
+2. Create New Account
 Enter your choice:
 ```
 
