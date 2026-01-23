@@ -22,7 +22,8 @@
     "GitHub.vscode-pull-request-github",
     "vscode-icons-team.vscode-icons",
     "ms-python.python",
-    "ms-python.vscode-pylance"
+    "ms-python.vscode-pylance",
+    "ms-python.black-formatter"
   ],
   "postCreateCommand": "mkdir -p bin src && echo 'Devcontainer ready.'"
 }
