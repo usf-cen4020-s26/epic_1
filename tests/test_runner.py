@@ -282,13 +282,14 @@ def discover_tests(test_root: Path) -> List[List[TestCase]]:
     # Recursively find all directories containing 'inputs' and 'expected' subdirectories
     def find_test_dirs(root: Path) -> List[Path]:
         """Find all directories that contain both 'inputs' and 'expected' subdirectories."""
-        test_dirs = []
+        test_dirs: List[Path] = []
         for item in root.rglob("*"):
             if item.is_dir():
                 inputs_dir = item / "inputs"
                 expected_dir = item / "expected"
                 if inputs_dir.exists() and expected_dir.exists():
                     test_dirs.append(item)
+
         return test_dirs
 
     # Discover all test directories
