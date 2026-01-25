@@ -48,7 +48,7 @@ Enter choice (1-4):
 6. Go Back
 Enter choice (1-6):
 10
-This is not a valid option. Please try again.
+Invalid choice. Please try again.
 
 === LEARN A NEW SKILL ===
 1. Skill 1

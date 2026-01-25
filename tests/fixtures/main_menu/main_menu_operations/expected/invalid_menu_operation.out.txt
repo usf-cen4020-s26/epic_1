@@ -38,7 +38,7 @@ You have successfully logged in
 4. Logout
 Enter choice (1-4):
 10
-This is not a valid option. Please try again.
+Invalid choice. Please try again.
 
 === MAIN MENU ===
 1. Search for a job
