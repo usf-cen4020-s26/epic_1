@@ -74,7 +74,9 @@ class CobolTestRunner:
     comparison of actual output against expected output.
     """
 
-    def __init__(self, executable_path: Path, work_dir: Optional[Path] = None, timeout: int = 10):
+    def __init__(
+        self, executable_path: Path, work_dir: Optional[Path] = None, timeout: int = 10
+    ):
         """
         Initialize the test runner.
 
@@ -149,7 +151,7 @@ class CobolTestRunner:
                 expected_output="",
                 actual_output="",
                 error_message=f"Test timed out after {self.timeout} seconds. "
-                             f"Program may be waiting for input or in an infinite loop.",
+                f"Program may be waiting for input or in an infinite loop.",
             )
         except Exception as e:
             return TestResult(
@@ -552,7 +554,7 @@ def main() -> int:
         "--timeout",
         type=int,
         default=10,
-        help="Maximum execution time in seconds for each test (default: 10)"
+        help="Maximum execution time in seconds for each test (default: 10)",
     )
 
     args = parser.parse_args()
