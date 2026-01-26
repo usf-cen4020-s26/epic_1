@@ -301,11 +301,20 @@ PROCEDURE DIVISION.
                PERFORM 8000-WRITE-OUTPUT
 
                PERFORM 8100-READ-INPUT
-               MOVE INPUT-RECORD TO WS-PASSWORD-INPUT
+*> *      *>    Check input length before truncation
+               MOVE FUNCTION LENGTH(
+                   FUNCTION TRIM(INPUT-RECORD))
+                   TO WS-PASSWORD-LENGTH
+               
+               IF WS-PASSWORD-LENGTH > 12
+                   MOVE 0 TO WS-PASSWORD-VALID
+               ELSE
+                   MOVE INPUT-RECORD TO WS-PASSWORD-INPUT
+                   PERFORM 4400-VALIDATE-PASSWORD
+               END-IF
+               
                MOVE "********" TO WS-OUTPUT-LINE
                PERFORM 8000-WRITE-OUTPUT
-
-               PERFORM 4400-VALIDATE-PASSWORD
 
                IF WS-PASSWORD-VALID = 0
                    MOVE "Password does not meet requirements."
@@ -412,7 +421,7 @@ PROCEDURE DIVISION.
                PERFORM 8000-WRITE-OUTPUT
                MOVE "=== MAIN MENU ===" TO WS-OUTPUT-LINE
                PERFORM 8000-WRITE-OUTPUT
-               MOVE "1. Job Search/Internship" TO WS-OUTPUT-LINE
+               MOVE "1. Search for a job" TO WS-OUTPUT-LINE
                PERFORM 8000-WRITE-OUTPUT
                MOVE "2. Find someone you know" TO WS-OUTPUT-LINE
                PERFORM 8000-WRITE-OUTPUT
@@ -430,10 +439,12 @@ PROCEDURE DIVISION.
 
                EVALUATE WS-MAIN-MENU-CHOICE
                    WHEN "1"
-                       MOVE "Under construction" TO WS-OUTPUT-LINE
+                       MOVE "Search for a job is under construction."
+                           TO WS-OUTPUT-LINE
                        PERFORM 8000-WRITE-OUTPUT
                    WHEN "2"
-                       MOVE "Under construction" TO WS-OUTPUT-LINE
+                       MOVE "Find someone you know is under construction."
+                           TO WS-OUTPUT-LINE
                        PERFORM 8000-WRITE-OUTPUT
                    WHEN "3"
                        PERFORM 6000-SKILLS-MENU
@@ -458,17 +469,17 @@ PROCEDURE DIVISION.
                PERFORM 8000-WRITE-OUTPUT
                MOVE "=== LEARN A NEW SKILL ===" TO WS-OUTPUT-LINE
                PERFORM 8000-WRITE-OUTPUT
-               MOVE "1. Python Programming" TO WS-OUTPUT-LINE
+               MOVE "1. Skill 1" TO WS-OUTPUT-LINE
                PERFORM 8000-WRITE-OUTPUT
-               MOVE "2. Data Analysis" TO WS-OUTPUT-LINE
+               MOVE "2. Skill 2" TO WS-OUTPUT-LINE
                PERFORM 8000-WRITE-OUTPUT
-               MOVE "3. Public Speaking" TO WS-OUTPUT-LINE
+               MOVE "3. Skill 3" TO WS-OUTPUT-LINE
                PERFORM 8000-WRITE-OUTPUT
-               MOVE "4. Project Management" TO WS-OUTPUT-LINE
+               MOVE "4. Skill 4" TO WS-OUTPUT-LINE
                PERFORM 8000-WRITE-OUTPUT
-               MOVE "5. Digital Marketing" TO WS-OUTPUT-LINE
+               MOVE "5. Skill 5" TO WS-OUTPUT-LINE
                PERFORM 8000-WRITE-OUTPUT
-               MOVE "6. Return to main menu" TO WS-OUTPUT-LINE
+               MOVE "6. Go Back" TO WS-OUTPUT-LINE
                PERFORM 8000-WRITE-OUTPUT
                MOVE "Enter choice (1-6): " TO WS-OUTPUT-LINE
                PERFORM 8000-WRITE-OUTPUT
@@ -478,8 +489,11 @@ PROCEDURE DIVISION.
                MOVE WS-SKILL-CHOICE TO WS-OUTPUT-LINE
                PERFORM 8000-WRITE-OUTPUT
 
-               IF WS-SKILL-CHOICE >= "1" AND WS-SKILL-CHOICE <= "5"
-                   MOVE "Under construction" TO WS-OUTPUT-LINE
+               IF WS-SKILL-CHOICE = "1" OR WS-SKILL-CHOICE = "2"
+                   OR WS-SKILL-CHOICE = "3" OR WS-SKILL-CHOICE = "4"
+                   OR WS-SKILL-CHOICE = "5"
+                   MOVE "This skill is under construction."
+                       TO WS-OUTPUT-LINE
                    PERFORM 8000-WRITE-OUTPUT
                ELSE
                    IF WS-SKILL-CHOICE NOT = "6"
