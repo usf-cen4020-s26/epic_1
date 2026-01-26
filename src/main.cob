@@ -156,7 +156,8 @@ PROCEDURE DIVISION.
            MOVE 0 TO WS-LOGIN-SUCCESS.
 
            PERFORM 3100-ATTEMPT-LOGIN
-               UNTIL WS-LOGIN-SUCCESS = 1.
+               UNTIL WS-LOGIN-SUCCESS = 1
+                OR INPUT-RECORD(1:3) = "EOF".
 
 *> *      *>*****************************************************************
 *> *      *> 3100-ATTEMPT-LOGIN: Single Login Attempt                      *
