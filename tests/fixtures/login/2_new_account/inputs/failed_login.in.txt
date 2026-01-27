@@ -6,5 +6,3 @@ FailUser
 WrongPass1!
 FailUser
 GoodPass1!
-4
-3

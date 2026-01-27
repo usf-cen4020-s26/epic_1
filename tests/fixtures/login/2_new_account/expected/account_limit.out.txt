@@ -92,6 +92,5 @@ Please select an option:
 2. Create new account
 3. Exit
 Enter choice (1-3):
-3
 
 Thank you for using InCollege!

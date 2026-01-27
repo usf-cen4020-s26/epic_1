@@ -41,7 +41,7 @@ WORKING-STORAGE SECTION.
 01  WS-LOGIN-SUCCESS            PIC 9 VALUE 0.
 01  WS-ACCOUNT-INDEX            PIC 9.
 
-01  WS-PASSWORD-INPUT           PIC X(12).
+01  WS-PASSWORD-INPUT           PIC X(50).
 01  WS-PASSWORD-LENGTH          PIC 99.
 01  WS-HAS-CAPITAL              PIC 9 VALUE 0.
 01  WS-HAS-DIGIT                PIC 9 VALUE 0.
@@ -72,6 +72,20 @@ PROCEDURE DIVISION.
 
 1000-INITIALIZE.
     OPEN INPUT INPUT-FILE.
+
+    IF WS-INPUT-STATUS NOT = "00"
+       EVALUATE WS-INPUT-STATUS
+          WHEN "35"
+             DISPLAY "ERROR: INPUT.TXT file not found"
+             DISPLAY "Create INPUT.TXT before running"
+          WHEN OTHER
+             DISPLAY "ERROR opening INPUT.TXT. FILE STATUS = "
+                     WS-INPUT-STATUS
+       END-EVALUATE
+       MOVE 0 TO WS-PROGRAM-RUNNING
+       STOP RUN
+    END-IF.
+
     OPEN OUTPUT OUTPUT-FILE.
 
     PERFORM 1100-LOAD-ACCOUNTS.
@@ -127,10 +141,13 @@ PROCEDURE DIVISION.
     PERFORM 8000-WRITE-OUTPUT.
 
     PERFORM 8100-READ-INPUT.
-    MOVE INPUT-RECORD TO WS-MENU-CHOICE.
-    IF INPUT-RECORD(1:3) = "EOF"
+
+    IF WS-EOF-FLAG = 1
         MOVE 0 TO WS-PROGRAM-RUNNING
-    END-IF.
+        EXIT PARAGRAPH
+    END-IF
+
+    MOVE INPUT-RECORD TO WS-MENU-CHOICE.
     MOVE WS-MENU-CHOICE TO WS-OUTPUT-LINE.
     PERFORM 8000-WRITE-OUTPUT.
 
@@ -173,6 +190,14 @@ PROCEDURE DIVISION.
            PERFORM 8000-WRITE-OUTPUT.
 
            PERFORM 8100-READ-INPUT.
+
+           IF WS-EOF-FLAG = 1
+               MOVE 1 TO WS-LOGIN-SUCCESS
+               MOVE 0 TO WS-PROGRAM-RUNNING
+               EXIT PARAGRAPH
+           END-IF
+
+
            MOVE INPUT-RECORD TO WS-LOGIN-USERNAME.
            MOVE WS-LOGIN-USERNAME TO WS-OUTPUT-LINE.
            PERFORM 8000-WRITE-OUTPUT.
@@ -180,6 +205,13 @@ PROCEDURE DIVISION.
            MOVE "Enter password: " TO WS-OUTPUT-LINE.
            PERFORM 8000-WRITE-OUTPUT.
            PERFORM 8100-READ-INPUT.
+
+           IF WS-EOF-FLAG = 1
+               MOVE 1 TO WS-LOGIN-SUCCESS
+               MOVE 0 TO WS-PROGRAM-RUNNING
+               EXIT PARAGRAPH
+           END-IF
+
            MOVE INPUT-RECORD TO WS-LOGIN-PASSWORD.
            MOVE "********" TO WS-OUTPUT-LINE.
            PERFORM 8000-WRITE-OUTPUT.
@@ -252,6 +284,12 @@ PROCEDURE DIVISION.
            PERFORM 8000-WRITE-OUTPUT.
 
            PERFORM 8100-READ-INPUT.
+
+           IF WS-EOF-FLAG = 1
+               MOVE 0 TO WS-PROGRAM-RUNNING
+               EXIT PARAGRAPH
+           END-IF
+
            MOVE INPUT-RECORD TO WS-LOGIN-USERNAME.
            MOVE WS-LOGIN-USERNAME TO WS-OUTPUT-LINE.
            PERFORM 8000-WRITE-OUTPUT.
@@ -300,6 +338,11 @@ PROCEDURE DIVISION.
                PERFORM 8000-WRITE-OUTPUT
 
                PERFORM 8100-READ-INPUT
+                IF WS-EOF-FLAG = 1
+                     MOVE 0 TO WS-PROGRAM-RUNNING
+                     EXIT PERFORM
+                END-IF
+
                MOVE INPUT-RECORD TO WS-PASSWORD-INPUT
                MOVE "********" TO WS-OUTPUT-LINE
                PERFORM 8000-WRITE-OUTPUT
@@ -411,7 +454,7 @@ PROCEDURE DIVISION.
                PERFORM 8000-WRITE-OUTPUT
                MOVE "=== MAIN MENU ===" TO WS-OUTPUT-LINE
                PERFORM 8000-WRITE-OUTPUT
-               MOVE "1. Job Search/Internship" TO WS-OUTPUT-LINE
+               MOVE "1. Search for a job" TO WS-OUTPUT-LINE
                PERFORM 8000-WRITE-OUTPUT
                MOVE "2. Find someone you know" TO WS-OUTPUT-LINE
                PERFORM 8000-WRITE-OUTPUT
@@ -423,16 +466,23 @@ PROCEDURE DIVISION.
                PERFORM 8000-WRITE-OUTPUT
 
                PERFORM 8100-READ-INPUT
+
+               IF WS-EOF-FLAG = 1
+                   MOVE "4" TO WS-MAIN-MENU-CHOICE
+                   MOVE 0 TO WS-PROGRAM-RUNNING
+                   EXIT PERFORM
+               END-IF
+
                MOVE INPUT-RECORD TO WS-MAIN-MENU-CHOICE
                MOVE WS-MAIN-MENU-CHOICE TO WS-OUTPUT-LINE
                PERFORM 8000-WRITE-OUTPUT
 
                EVALUATE WS-MAIN-MENU-CHOICE
                    WHEN "1"
-                       MOVE "Under construction" TO WS-OUTPUT-LINE
+                       MOVE "Search for a job is under construction." TO WS-OUTPUT-LINE
                        PERFORM 8000-WRITE-OUTPUT
                    WHEN "2"
-                       MOVE "Under construction" TO WS-OUTPUT-LINE
+                       MOVE "Find someone you know is under construction." TO WS-OUTPUT-LINE
                        PERFORM 8000-WRITE-OUTPUT
                    WHEN "3"
                        PERFORM 6000-SKILLS-MENU
@@ -457,28 +507,37 @@ PROCEDURE DIVISION.
                PERFORM 8000-WRITE-OUTPUT
                MOVE "=== LEARN A NEW SKILL ===" TO WS-OUTPUT-LINE
                PERFORM 8000-WRITE-OUTPUT
-               MOVE "1. Python Programming" TO WS-OUTPUT-LINE
+               MOVE "1. Skill 1" TO WS-OUTPUT-LINE
                PERFORM 8000-WRITE-OUTPUT
-               MOVE "2. Data Analysis" TO WS-OUTPUT-LINE
+               MOVE "2. Skill 2" TO WS-OUTPUT-LINE
                PERFORM 8000-WRITE-OUTPUT
-               MOVE "3. Public Speaking" TO WS-OUTPUT-LINE
+               MOVE "3. Skill 3" TO WS-OUTPUT-LINE
                PERFORM 8000-WRITE-OUTPUT
-               MOVE "4. Project Management" TO WS-OUTPUT-LINE
+               MOVE "4. Skill 4" TO WS-OUTPUT-LINE
                PERFORM 8000-WRITE-OUTPUT
-               MOVE "5. Digital Marketing" TO WS-OUTPUT-LINE
+               MOVE "5. Skill 5" TO WS-OUTPUT-LINE
                PERFORM 8000-WRITE-OUTPUT
-               MOVE "6. Return to main menu" TO WS-OUTPUT-LINE
+               MOVE "6. Go Back" TO WS-OUTPUT-LINE
                PERFORM 8000-WRITE-OUTPUT
                MOVE "Enter choice (1-6): " TO WS-OUTPUT-LINE
                PERFORM 8000-WRITE-OUTPUT
 
                PERFORM 8100-READ-INPUT
+
+               IF WS-EOF-FLAG = 1
+                   MOVE "6" TO WS-SKILL-CHOICE
+                   MOVE 0 TO WS-PROGRAM-RUNNING
+                   EXIT PERFORM
+               END-IF
+
                MOVE INPUT-RECORD TO WS-SKILL-CHOICE
                MOVE WS-SKILL-CHOICE TO WS-OUTPUT-LINE
                PERFORM 8000-WRITE-OUTPUT
 
-               IF WS-SKILL-CHOICE >= "1" AND WS-SKILL-CHOICE <= "5"
-                   MOVE "Under construction" TO WS-OUTPUT-LINE
+               IF WS-SKILL-CHOICE = "1" OR WS-SKILL-CHOICE = "2" OR
+                   WS-SKILL-CHOICE = "3" OR WS-SKILL-CHOICE = "4" OR
+                   WS-SKILL-CHOICE = "5"
+                   MOVE "This skill is under construction." TO WS-OUTPUT-LINE
                    PERFORM 8000-WRITE-OUTPUT
                ELSE
                    IF WS-SKILL-CHOICE NOT = "6"
@@ -504,7 +563,8 @@ PROCEDURE DIVISION.
        8100-READ-INPUT.
            READ INPUT-FILE
                AT END
-                   MOVE "EOF" TO INPUT-RECORD
+                   MOVE 1 to WS-EOF-FLAG
+                   MOVE SPACES TO INPUT-RECORD
            END-READ.
 
 *> *      *>*****************************************************************
