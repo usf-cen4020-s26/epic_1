@@ -468,7 +468,6 @@ PROCEDURE DIVISION.
                PERFORM 8100-READ-INPUT
 
                IF WS-EOF-FLAG = 1
-                   MOVE "4" TO WS-MAIN-MENU-CHOICE
                    MOVE 0 TO WS-PROGRAM-RUNNING
                    EXIT PERFORM
                END-IF
@@ -525,7 +524,6 @@ PROCEDURE DIVISION.
                PERFORM 8100-READ-INPUT
 
                IF WS-EOF-FLAG = 1
-                   MOVE "6" TO WS-SKILL-CHOICE
                    MOVE 0 TO WS-PROGRAM-RUNNING
                    EXIT PERFORM
                END-IF
