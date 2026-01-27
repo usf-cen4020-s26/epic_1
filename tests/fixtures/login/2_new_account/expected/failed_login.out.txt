@@ -39,10 +39,12 @@ Enter password:
 You have successfully logged in
 
 === MAIN MENU ===
-1. Search for a job
-2. Find someone you know
-3. Learn a new skill
-4. Logout
-Enter choice (1-4):
+1. Create/Edit My Profile
+2. View My Profile
+3. Search for a job
+4. Find someone you know
+5. Learn a new skill
+6. Logout
+Enter choice (1-6):
 
 Thank you for using InCollege!
