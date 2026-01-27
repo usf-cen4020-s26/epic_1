@@ -878,6 +878,7 @@ PROCEDURE DIVISION.
 *> *      *> 7110-DISPLAY-BASIC-INFO: Display required profile fields      *
 *> *      *>*****************************************************************
        7110-DISPLAY-BASIC-INFO.
+           MOVE SPACES TO WS-OUTPUT-LINE.
            STRING "Name: "
                FUNCTION TRIM(WS-FIRST-NAME(WS-CURRENT-PROFILE-INDEX))
                " "
@@ -886,18 +887,21 @@ PROCEDURE DIVISION.
            END-STRING.
            PERFORM 8000-WRITE-OUTPUT.
 
+           MOVE SPACES TO WS-OUTPUT-LINE.
            STRING "University: "
                FUNCTION TRIM(WS-UNIVERSITY(WS-CURRENT-PROFILE-INDEX))
                DELIMITED BY SIZE INTO WS-OUTPUT-LINE
            END-STRING.
            PERFORM 8000-WRITE-OUTPUT.
 
+           MOVE SPACES TO WS-OUTPUT-LINE.
            STRING "Major: "
                FUNCTION TRIM(WS-MAJOR(WS-CURRENT-PROFILE-INDEX))
                DELIMITED BY SIZE INTO WS-OUTPUT-LINE
            END-STRING.
            PERFORM 8000-WRITE-OUTPUT.
 
+           MOVE SPACES TO WS-OUTPUT-LINE.
            STRING "Graduation Year: "
                WS-GRAD-YEAR(WS-CURRENT-PROFILE-INDEX)
                DELIMITED BY SIZE INTO WS-OUTPUT-LINE
@@ -908,6 +912,7 @@ PROCEDURE DIVISION.
 *> *      *> 7120-DISPLAY-ABOUT-ME: Display About Me section               *
 *> *      *>*****************************************************************
        7120-DISPLAY-ABOUT-ME.
+           MOVE SPACES TO WS-OUTPUT-LINE.
            STRING "About Me: "
                FUNCTION TRIM(WS-ABOUT-ME(WS-CURRENT-PROFILE-INDEX))
                DELIMITED BY SIZE INTO WS-OUTPUT-LINE
@@ -932,6 +937,7 @@ PROCEDURE DIVISION.
 *> *      *> 7131-DISPLAY-SINGLE-EXPERIENCE: Display one experience entry  *
 *> *      *>*****************************************************************
        7131-DISPLAY-SINGLE-EXPERIENCE.
+           MOVE SPACES TO WS-OUTPUT-LINE.
            STRING "  Title: "
                FUNCTION TRIM(WS-EXP-TITLE(WS-CURRENT-PROFILE-INDEX,
                    WS-DISPLAY-INDEX))
@@ -939,6 +945,7 @@ PROCEDURE DIVISION.
            END-STRING.
            PERFORM 8000-WRITE-OUTPUT.
 
+           MOVE SPACES TO WS-OUTPUT-LINE.
            STRING "  Company: "
                FUNCTION TRIM(WS-EXP-COMPANY(WS-CURRENT-PROFILE-INDEX,
                    WS-DISPLAY-INDEX))
@@ -946,6 +953,7 @@ PROCEDURE DIVISION.
            END-STRING.
            PERFORM 8000-WRITE-OUTPUT.
 
+           MOVE SPACES TO WS-OUTPUT-LINE.
            STRING "  Dates: "
                FUNCTION TRIM(WS-EXP-DATES(WS-CURRENT-PROFILE-INDEX,
                    WS-DISPLAY-INDEX))
@@ -955,6 +963,7 @@ PROCEDURE DIVISION.
 
            IF WS-EXP-DESC(WS-CURRENT-PROFILE-INDEX, WS-DISPLAY-INDEX)
                NOT = SPACES
+               MOVE SPACES TO WS-OUTPUT-LINE
                STRING "  Description: "
                    FUNCTION TRIM(WS-EXP-DESC(WS-CURRENT-PROFILE-INDEX,
                        WS-DISPLAY-INDEX))
@@ -981,6 +990,7 @@ PROCEDURE DIVISION.
 *> *      *> 7141-DISPLAY-SINGLE-EDUCATION: Display one education entry    *
 *> *      *>*****************************************************************
        7141-DISPLAY-SINGLE-EDUCATION.
+           MOVE SPACES TO WS-OUTPUT-LINE.
            STRING "  Degree: "
                FUNCTION TRIM(WS-EDU-DEGREE(WS-CURRENT-PROFILE-INDEX,
                    WS-DISPLAY-INDEX))
@@ -988,6 +998,7 @@ PROCEDURE DIVISION.
            END-STRING.
            PERFORM 8000-WRITE-OUTPUT.
 
+           MOVE SPACES TO WS-OUTPUT-LINE.
            STRING "  University: "
                FUNCTION TRIM(WS-EDU-UNIVERSITY(WS-CURRENT-PROFILE-INDEX,
                    WS-DISPLAY-INDEX))
@@ -995,6 +1006,7 @@ PROCEDURE DIVISION.
            END-STRING.
            PERFORM 8000-WRITE-OUTPUT.
 
+           MOVE SPACES TO WS-OUTPUT-LINE.
            STRING "  Years: "
                FUNCTION TRIM(WS-EDU-YEARS(WS-CURRENT-PROFILE-INDEX,
                    WS-DISPLAY-INDEX))
