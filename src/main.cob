@@ -74,9 +74,15 @@ PROCEDURE DIVISION.
     OPEN INPUT INPUT-FILE.
 
     IF WS-INPUT-STATUS NOT = "00"
-       DISPLAY "ERROR: INPUT.TXT file not found"
-       DISPLAY "Create INPUT.TXT before running"
-       MOVE 0 to WS-PROGRAM-RUNNING
+       EVALUATE WS-INPUT-STATUS
+          WHEN "35"
+             DISPLAY "ERROR: INPUT.TXT file not found"
+             DISPLAY "Create INPUT.TXT before running"
+          WHEN OTHER
+             DISPLAY "ERROR opening INPUT.TXT. FILE STATUS = "
+                     WS-INPUT-STATUS
+       END-EVALUATE
+       MOVE 0 TO WS-PROGRAM-RUNNING
        STOP RUN
     END-IF.
 
