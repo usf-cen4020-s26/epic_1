@@ -284,6 +284,12 @@ PROCEDURE DIVISION.
            PERFORM 8000-WRITE-OUTPUT.
 
            PERFORM 8100-READ-INPUT.
+
+           IF WS-EOF-FLAG = 1
+               MOVE 0 TO WS-PROGRAM-RUNNING
+               EXIT PARAGRAPH
+           END-IF
+
            MOVE INPUT-RECORD TO WS-LOGIN-USERNAME.
            MOVE WS-LOGIN-USERNAME TO WS-OUTPUT-LINE.
            PERFORM 8000-WRITE-OUTPUT.
@@ -332,6 +338,11 @@ PROCEDURE DIVISION.
                PERFORM 8000-WRITE-OUTPUT
 
                PERFORM 8100-READ-INPUT
+                IF WS-EOF-FLAG = 1
+                     MOVE 0 TO WS-PROGRAM-RUNNING
+                     EXIT PERFORM
+                END-IF
+
                MOVE INPUT-RECORD TO WS-PASSWORD-INPUT
                MOVE "********" TO WS-OUTPUT-LINE
                PERFORM 8000-WRITE-OUTPUT
