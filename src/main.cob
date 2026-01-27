@@ -450,6 +450,7 @@ PROCEDURE DIVISION.
            MOVE "1" TO WS-MAIN-MENU-CHOICE.
 
            PERFORM UNTIL WS-MAIN-MENU-CHOICE = "4"
+               OR WS-PROGRAM-RUNNING = 0
                MOVE " " TO WS-OUTPUT-LINE
                PERFORM 8000-WRITE-OUTPUT
                MOVE "=== MAIN MENU ===" TO WS-OUTPUT-LINE
@@ -502,6 +503,7 @@ PROCEDURE DIVISION.
            MOVE "1" TO WS-SKILL-CHOICE.
 
            PERFORM UNTIL WS-SKILL-CHOICE = "6"
+               OR WS-PROGRAM-RUNNING = 0
                MOVE " " TO WS-OUTPUT-LINE
                PERFORM 8000-WRITE-OUTPUT
                MOVE "=== LEARN A NEW SKILL ===" TO WS-OUTPUT-LINE
