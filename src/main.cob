@@ -182,7 +182,7 @@ PROCEDURE DIVISION.
 
            PERFORM 8100-READ-INPUT.
 
-           IF WS-EOF-FLAG = "1"
+           IF WS-EOF-FLAG = 1
                MOVE 1 TO WS-LOGIN-SUCCESS
                MOVE 0 TO WS-PROGRAM-RUNNING
                EXIT PARAGRAPH
@@ -197,7 +197,7 @@ PROCEDURE DIVISION.
            PERFORM 8000-WRITE-OUTPUT.
            PERFORM 8100-READ-INPUT.
 
-           IF WS-EOF-FLAG = "1"
+           IF WS-EOF-FLAG = 1
                MOVE 1 TO WS-LOGIN-SUCCESS
                MOVE 0 TO WS-PROGRAM-RUNNING
                EXIT PARAGRAPH
