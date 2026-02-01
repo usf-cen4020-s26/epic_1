@@ -23,7 +23,7 @@ FD  INPUT-FILE.
 01  INPUT-RECORD                PIC X(200).
 
 FD  OUTPUT-FILE.
-01  OUTPUT-RECORD               PIC X(80).
+01  OUTPUT-RECORD               PIC X(200).
 
 FD  ACCOUNTS-FILE.
 01  ACCOUNT-RECORD.
@@ -151,7 +151,7 @@ WORKING-STORAGE SECTION.
 01  WS-DISPLAY-INDEX            PIC 9.
 01  WS-PROFILE-EXISTS           PIC 9 VALUE 0.
 
-01  WS-OUTPUT-LINE              PIC X(80).
+01  WS-OUTPUT-LINE              PIC X(200).
 
 PROCEDURE DIVISION.
        0000-MAIN-PROGRAM.
@@ -1230,7 +1230,7 @@ PROCEDURE DIVISION.
 
                MOVE " " TO WS-OUTPUT-LINE
                PERFORM 8000-WRITE-OUTPUT
-               MOVE "Add Experience (optional, max 3 entries. Enter 'DONE' to finish):"
+               MOVE "Add Experience (optional, max 3 entries. Enter anything to continue and 'DONE' to finish):"
                    TO WS-OUTPUT-LINE
                PERFORM 8000-WRITE-OUTPUT
 
@@ -1330,7 +1330,7 @@ PROCEDURE DIVISION.
 
                MOVE " " TO WS-OUTPUT-LINE
                PERFORM 8000-WRITE-OUTPUT
-               MOVE "Add Education (optional, max 3 entries. Enter 'DONE' to finish):"
+               MOVE "Add Education (optional, max 3 entries. Enter anything to continue and 'DONE' to finish):"
                    TO WS-OUTPUT-LINE
                PERFORM 8000-WRITE-OUTPUT
 
