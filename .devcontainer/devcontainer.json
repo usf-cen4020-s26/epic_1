@@ -23,7 +23,8 @@
     "vscode-icons-team.vscode-icons",
     "ms-python.python",
     "ms-python.vscode-pylance",
-    "ms-python.black-formatter"
+    "ms-python.black-formatter",
+    "donjayamanne.githistory"
   ],
   "postCreateCommand": "mkdir -p bin src && echo 'Devcontainer ready.'"
 }
