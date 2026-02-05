@@ -32,6 +32,8 @@ University: Miami University
 Major: Data Science
 Graduation Year: 2026
 About Me: Aspiring data scientist with a focus on machine learning.
+Experience: None
+Education: None
 --------------------
 
 === MAIN MENU ===

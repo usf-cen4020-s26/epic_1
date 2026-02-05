@@ -88,11 +88,13 @@ Name: Jane Smith
 University: State University
 Major: Information Technology
 Graduation Year: 2024
+About Me: None
 Experience:
   Title: Software Intern
   Company/Organization: Tech Solutions Inc.
   Dates: Summer 2024
   Description: Developed internal testing tools
+Education: None
 --------------------
 
 === MAIN MENU ===
