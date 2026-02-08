@@ -150,9 +150,9 @@ Navigation:
 
 ---
 
-## Find Someone Under Construction Screen
+## Find Someone Under Construction Screen (Pre-Week 3)
 
-Purpose: Confirms feature is not implemented.
+Purpose: Confirms feature is not implemented (before Week 3).
 
 ```bash
 Find someone you know is under construction.
@@ -161,6 +161,54 @@ Find someone you know is under construction.
 
 Navigation:
 - Returns to **Main Menu Screen**
+
+---
+
+## User Search Screen (Week 3 - Epic #3)
+
+Purpose: Allows logged-in users to search for other InCollege users by full name. Performs **exact match** only.
+
+### Search Prompt
+
+```bash
+Enter the full name of the person you are looking for:
+```
+
+### Match Found
+
+When a user with the exact name is found, display their full profile (same format as View My Profile):
+
+```bash
+=== PROFILE: [First Last] ===
+Name: [First Last]
+University: [University]
+Major: [Major]
+Graduation Year: [Year]
+About Me: [About Me text]
+Experience:
+  Title: [...]
+  ...
+Education:
+  Degree: [...]
+  ...
+--------------------
+```
+
+### No Match Found
+
+```bash
+No one by that name could be found.
+```
+
+### Search Behavior
+
+- **Exact match only**: "John Doe" finds "John Doe" but NOT "John" or "Doe" or "John Doe2"
+- Input is read from the input file
+- Search query is echoed to output (for tester verification)
+- All output is written to OUTPUT.TXT identically to screen display
+
+Navigation:
+- After search result -> returns to **Main Menu Screen**
 
 ---
 
