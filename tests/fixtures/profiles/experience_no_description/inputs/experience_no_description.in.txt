@@ -1,0 +1,25 @@
+2
+NoDescUser
+Pass123!
+1
+NoDescUser
+Pass123!
+1
+Chris
+Brown
+Texas A&M
+Engineering
+2025
+Student.
+
+ADD
+Intern
+Acme Corp
+2024
+
+(skipped)
+DONE
+DONE
+2
+6
+3

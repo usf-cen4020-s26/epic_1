@@ -1,0 +1,102 @@
+========================================
+     WELCOME TO INCOLLEGE
+========================================
+
+Please select an option:
+1. Login with existing account
+2. Create new account
+3. Exit
+Enter choice (1-3):
+1
+
+=== LOGIN ===
+Enter username:
+EditViewUser
+Enter password:
+********
+You have successfully logged in
+
+=== MAIN MENU ===
+1. Create/Edit My Profile
+2. View My Profile
+3. Search for a job
+4. Find someone you know
+5. Learn a new skill
+6. Logout
+Enter choice (1-6):
+1
+
+=== EDIT MY PROFILE ===
+Enter First Name:
+Updated
+Enter Last Name:
+Name
+Enter University/College Attended:
+New University
+Enter Major:
+New Major
+Enter Graduation Year (YYYY):
+2025
+Enter About Me (optional, max 200 chars, enter blank line to skip):
+Updated about text after edit.
+
+Add Experience (optional, max 3 entries. Enter anything to continue and 'DONE' to finish):
+ADD
+Experience #1 - Title:
+New Job
+Experience #1 - Company/Organization:
+New Company
+Experience #1 - Dates (e.g., Summer 2024):
+2024-2025
+Experience #1 - Description (optional, max 100 chars,
+blank to skip):
+New role description
+
+Add Experience (optional, max 3 entries. Enter anything to continue and 'DONE' to finish):
+DONE
+
+Add Education (optional, max 3 entries. Enter anything to continue and 'DONE' to finish):
+DONE
+Profile saved successfully!
+
+=== MAIN MENU ===
+1. Create/Edit My Profile
+2. View My Profile
+3. Search for a job
+4. Find someone you know
+5. Learn a new skill
+6. Logout
+Enter choice (1-6):
+2
+
+=== YOUR PROFILE ===
+Name: Updated Name
+University: New University
+Major: New Major
+Graduation Year: 2025
+About Me: Updated about text after edit.
+Experience:
+  Title: New Job
+  Company/Organization: New Company
+  Dates: 2024-2025
+  Description: New role description
+--------------------
+
+=== MAIN MENU ===
+1. Create/Edit My Profile
+2. View My Profile
+3. Search for a job
+4. Find someone you know
+5. Learn a new skill
+6. Logout
+Enter choice (1-6):
+6
+
+Please select an option:
+1. Login with existing account
+2. Create new account
+3. Exit
+Enter choice (1-3):
+3
+
+Thank you for using InCollege!

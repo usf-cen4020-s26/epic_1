@@ -1,0 +1,22 @@
+2
+EduOnlyUser
+Pass123!
+1
+EduOnlyUser
+Pass123!
+1
+Pat
+Davis
+UC Berkeley
+Economics
+2026
+Future economist.
+DONE
+ADD
+B.A. Economics
+UC Berkeley
+2022-2026
+DONE
+2
+6
+3

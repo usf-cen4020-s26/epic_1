@@ -1,0 +1,31 @@
+2
+ViewProfileUser
+Pass123!
+1
+ViewProfileUser
+Pass123!
+1
+John
+Doe
+University of Florida
+Computer Science
+2025
+Aspiring software engineer seeking internship opportunities.
+ADD
+Software Intern
+Tech Company
+Summer 2024
+Developed web applications.
+ADD
+Research Assistant
+UF Research Lab
+2023-2024
+Data analysis and visualization.
+DONE
+ADD
+Bachelor of Science
+University of Florida
+2021-2025
+DONE
+6
+3
